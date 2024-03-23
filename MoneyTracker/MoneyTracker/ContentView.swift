@@ -53,6 +53,7 @@ struct ContentView: View {
     @State var categorySort : recordSort = .none
     @State var nameSort : recordSort = .none
     @State var costSort : recordSort = .none
+    @State var selectDeleteID : UUID = UUID()
     var body: some View {
         TabView {
             moneyAccountingView
@@ -144,19 +145,28 @@ struct ContentView: View {
                 }
             }
             ScrollView {
-                LazyVGrid(columns: gridItem) {
-                    ForEach(eachAccountingList, id: \.self) {
-                        accounting in
-                        if accounting.time.formatted(date: .numeric, time: .omitted) == dateSelected.formatted(date: .numeric, time: .omitted) {
-                            let _ = print(accounting)
-                            eachRecordNavigate(accounting: accounting, labelStr: "\(accounting.costCategory)" as String)
-                            eachRecordNavigate(accounting: accounting, labelStr: "\(accounting.costName)" as String)
-                            eachRecordNavigate(accounting: accounting, labelStr: "\(accounting.cost)" as String)
+                ForEach(eachAccountingList, id: \.self) { accounting in
+                    if accounting.time.formatted(date: .numeric, time: .omitted) == dateSelected.formatted(date: .numeric, time: .omitted) {
+                        let _ = print(accounting)
+                        NavigationLink {
+                            eachRecordNavigate(accounting: accounting, deleteID: $selectDeleteID)
+                        } label: {
+                            HStack {
+                                Text("\(accounting.costCategory)" as String)
+                                    .padding(.horizontal)
+                                Spacer()
+                                Text("\(accounting.costName)" as String)
+                                Spacer()
+                                Text("\(accounting.cost)" as String)
+                                    .padding(.horizontal)
+                            }
                         }
-                        
+
                     }
+                    
                 }
             }
+            
             Spacer()
                 .toolbar {
                     ToolbarItem {
@@ -291,6 +301,12 @@ struct ContentView: View {
                         }
                     }
                 }
+                .onChange(of: selectDeleteID) { newValue in
+                    eachAccountingList = eachAccountingList.filter({$0.id != newValue})
+                    if let encoded = try? JSONEncoder().encode(eachAccountingList) {
+                        UserDefaults.standard.setValue(encoded, forKey: "records")
+                    }
+                }
                 
         }
         .onAppear {
@@ -322,50 +338,59 @@ struct ContentView: View {
 
 struct eachRecordNavigate : View {
     let accounting : eachAccounting
-    let labelStr : String
+    @Binding var deleteID : UUID
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        NavigationLink {
-            Form {
-                HStack {
-                    Label("類別", systemImage: "folder.fill.badge.gearshape")
-                    Spacer()
-                    Text("\(accounting.costCategory)" as String)
-                }
-                HStack {
-                    Label("項目名稱", systemImage: "rectangle.and.pencil.and.ellipsis")
-                    Spacer()
-                    Text("\(accounting.costName)" as String)
-                }
-                HStack {
-                    Label("花費", systemImage: "creditcard")
-                    Spacer()
-                    Text("\(accounting.cost)" as String)
-                }
-                HStack {
-                    Label("日期", systemImage: "calendar.badge.clock")
-                    Spacer()
-                    Text("\(accounting.time.formatted(date: .numeric, time: .omitted))" as String)
-                }
-                HStack {
-                    Label("備註", systemImage: "scribble.variable")
-                    Spacer()
-                    Text("\(accounting.note)" as String)
-                        .multilineTextAlignment(.trailing)
-                    
-                }
-                HStack {
-                    Label("照片", systemImage: "camera")
-                    if let picture = accounting.itemPicture {
-                        let image = UIImage(data: picture)!
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                    
-                }
+        Form {
+            HStack {
+                Label("類別", systemImage: "folder.fill.badge.gearshape")
+                Spacer()
+                Text("\(accounting.costCategory)" as String)
             }
-        } label: {
-            Text(labelStr)
+            HStack {
+                Label("項目名稱", systemImage: "rectangle.and.pencil.and.ellipsis")
+                Spacer()
+                Text("\(accounting.costName)" as String)
+            }
+            HStack {
+                Label("花費", systemImage: "creditcard")
+                Spacer()
+                Text("\(accounting.cost)" as String)
+            }
+            HStack {
+                Label("日期", systemImage: "calendar.badge.clock")
+                Spacer()
+                Text("\(accounting.time.formatted(date: .numeric, time: .omitted))" as String)
+            }
+            HStack {
+                Label("備註", systemImage: "scribble.variable")
+                Spacer()
+                Text("\(accounting.note)" as String)
+                    .multilineTextAlignment(.trailing)
+                
+            }
+            HStack {
+                Label("照片", systemImage: "camera")
+                if let picture = accounting.itemPicture {
+                    let image = UIImage(data: picture)!
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+                
+            }
+        }
+        .toolbar {
+            ToolbarItem {
+                Button {
+                    print("delete")
+                    deleteID = accounting.id
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "trash")
+                }
+
+            }
         }
     }
 }
