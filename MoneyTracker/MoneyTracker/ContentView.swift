@@ -7,14 +7,21 @@
 
 import SwiftUI
 import PhotosUI
+import Charts
 
-enum costCategory : CaseIterable, Codable {
+enum costCategory : CaseIterable, Codable, Comparable {
     case food
     case entertainment
     var label : some View {
         switch(self) {
         case .food: return Label("飲食", systemImage: "fork.knife.circle")
         case .entertainment: return Label("娛樂", systemImage: "party.popper")
+        }
+    }
+    var returnText : String {
+        switch(self) {
+            case .food: return "飲食"
+            case .entertainment: return "娛樂"
         }
     }
 }
@@ -29,7 +36,7 @@ enum recordSort {
     case none
 }
 
-struct eachAccounting : Codable, Hashable {
+struct eachAccounting : Codable, Hashable,Identifiable {
     let costCategory : costCategory
     let costName : String
     let cost: Int
@@ -37,6 +44,12 @@ struct eachAccounting : Codable, Hashable {
     let note : String
     let itemPicture : Data?
     var id : UUID = UUID()
+}
+
+struct eachCategoryCost : Identifiable {
+    let category : costCategory
+    let id = UUID()
+    var cost : Int
 }
 
 struct ContentView: View {
@@ -50,14 +63,19 @@ struct ContentView: View {
     @State var selectPhotoData : Data?
     @State var eachAccountingList : [eachAccounting] = []
     let gridItem : [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    @State var categorySort : recordSort = .none
+    @State var categorySort : recordSort = .ascending
     @State var nameSort : recordSort = .none
     @State var costSort : recordSort = .none
     @State var selectDeleteID : UUID = UUID()
+    @State var showCostInDayDate : Date = Date.now
+    @State var costDayData : [eachAccounting] = [eachAccounting]()
+    @State var costDayDataCategoryTotal : [eachCategoryCost] = [eachCategoryCost]()
+    
     var body: some View {
         TabView {
             moneyAccountingView
             checkCostView
+            settingView
         }
         
     }
@@ -72,13 +90,19 @@ struct ContentView: View {
                     print("sort")
                     if categorySort == .none {
                         categorySort = .ascending
+                        nameSort = .none
+                        costSort = .none
                         print(1)
                     } else if categorySort == .ascending {
                         categorySort = .descending
+                        nameSort = .none
+                        costSort = .none
                         print(2)
                     } else {
-                        categorySort = .none
-                        print(3)
+                        categorySort = .ascending
+                        nameSort = .none
+                        costSort = .none
+                        print(2)
                     }
                 } label: {
                     Image(systemName: "tray.full")
@@ -88,22 +112,30 @@ struct ContentView: View {
                     } else if categorySort == .ascending {
                         Image(systemName: "arrowtriangle.up.fill")
                             .imageScale(.large)
+                            .foregroundColor(.red)
                     } else {
                         Image(systemName: "arrowtriangle.down.fill")
                             .imageScale(.large)
+                            .foregroundColor(.green)
                     }
                 }
                 Button {
                     print("sort")
                     if nameSort == .none {
                         nameSort = .ascending
+                        categorySort = .none
+                        costSort = .none
                         print(1)
                     } else if nameSort == .ascending {
                         nameSort = .descending
+                        categorySort = .none
+                        costSort = .none
                         print(2)
                     } else {
-                        nameSort = .none
-                        print(3)
+                        categorySort = .none
+                        nameSort = .ascending
+                        costSort = .none
+                        print(2)
                     }
                 } label: {
                     Image(systemName: "textformat.abc")
@@ -113,22 +145,30 @@ struct ContentView: View {
                     } else if nameSort == .ascending {
                         Image(systemName: "arrowtriangle.up.fill")
                             .imageScale(.large)
+                            .foregroundColor(.red)
                     } else {
                         Image(systemName: "arrowtriangle.down.fill")
                             .imageScale(.large)
+                            .foregroundColor(.green)
                     }
                 }
                 Button {
                     print("sort")
                     if costSort == .none {
                         costSort = .ascending
+                        categorySort = .none
+                        nameSort = .none
                         print(1)
                     } else if costSort == .ascending {
                         costSort = .descending
+                        categorySort = .none
+                        nameSort = .none
                         print(2)
                     } else {
-                        costSort = .none
-                        print(3)
+                        categorySort = .none
+                        nameSort = .none
+                        costSort = .ascending
+                        print(2)
                     }
                 } label: {
                     Image(systemName: "dollarsign.circle.fill")
@@ -138,9 +178,11 @@ struct ContentView: View {
                     } else if costSort == .ascending {
                         Image(systemName: "arrowtriangle.up.fill")
                             .imageScale(.large)
+                            .foregroundColor(.red)
                     } else {
                         Image(systemName: "arrowtriangle.down.fill")
                             .imageScale(.large)
+                            .foregroundColor(.green)
                     }
                 }
             }
@@ -152,14 +194,34 @@ struct ContentView: View {
                             eachRecordNavigate(accounting: accounting, deleteID: $selectDeleteID)
                         } label: {
                             HStack {
-                                Text("\(accounting.costCategory)" as String)
+                                Text(accounting.costCategory.returnText)
+                                    .font(.system(size: 20))
+                                    .padding(15)
+                                    .frame(width: UIScreen.main.bounds.width/4)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                                     .padding(.horizontal)
                                 Spacer()
                                 Text("\(accounting.costName)" as String)
+                                    .font(.system(size: 20))
+                                    .padding(15)
+                                    .frame(width: UIScreen.main.bounds.width/4)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                                 Spacer()
                                 Text("\(accounting.cost)" as String)
-                                    .padding(.horizontal)
+                                    .font(.system(size: 20))
+                                    .padding(15)
+                                    .frame(width: UIScreen.main.bounds.width/4)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                    
                             }
+                            .padding(.bottom, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(.orange)
+                            )
                         }
 
                     }
@@ -176,15 +238,6 @@ struct ContentView: View {
                         } label: {
                             Label("新增紀錄", systemImage: "plus.app")
                                 .labelStyle(.titleAndIcon)
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            let domain = Bundle.main.bundleIdentifier!
-                            UserDefaults.standard.removePersistentDomain(forName: domain)
-                            UserDefaults.standard.synchronize()
-                        } label: {
-                            Label("清除紀錄", systemImage: "xmark.circle")
                         }
                     }
                 }
@@ -307,6 +360,27 @@ struct ContentView: View {
                         UserDefaults.standard.setValue(encoded, forKey: "records")
                     }
                 }
+                .onChange(of: categorySort) { newValue in
+                    if newValue == .ascending {
+                        eachAccountingList.sort{$0.costCategory < $1.costCategory}
+                    } else if newValue == .descending {
+                        eachAccountingList.sort{$0.costCategory > $1.costCategory}
+                    }
+                }
+                .onChange(of: nameSort) { newValue in
+                    if newValue == .ascending {
+                        eachAccountingList.sort{$0.costName < $1.costName}
+                    } else if newValue == .descending {
+                        eachAccountingList.sort{$0.costName > $1.costName}
+                    }
+                }
+                .onChange(of: costSort) { newValue in
+                    if newValue == .ascending {
+                        eachAccountingList.sort{$0.cost < $1.cost}
+                    } else if newValue == .descending {
+                        eachAccountingList.sort{$0.cost > $1.cost}
+                    }
+                }
                 
         }
         .onAppear {
@@ -329,13 +403,136 @@ struct ContentView: View {
     
     @ViewBuilder
     private var checkCostView : some View {
-        Text("檢視花費狀況")
+        NavigationStack {
+            NavigationLink {
+                dailyCostView
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("以日檢視花費狀況")
+                        .font(.system(size: 20))
+                    Image(systemName: "arrowshape.right.fill")
+                    Spacer()
+                }
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.blue)
+                        .opacity(0.4)
+                )
+                .padding(5)
+            }
+            NavigationLink {
+                Text("1")
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("以週檢視花費狀況")
+                        .font(.system(size: 20))
+                    Image(systemName: "arrowshape.right.fill")
+                    Spacer()
+                }
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.blue)
+                        .opacity(0.4)
+                )
+                .padding(5)
+            }
+            NavigationLink {
+                Text("1")
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("以月檢視花費狀況")
+                        .font(.system(size: 20))
+                    Image(systemName: "arrowshape.right.fill")
+                    Spacer()
+                }
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.blue)
+                        .opacity(0.4)
+                )
+                .padding(5)
+            }
+            
+        }
             .tabItem {
                 Label("花費狀況", systemImage: "chart.bar")
             }
     }
+    
+    @ViewBuilder
+    private var settingView : some View {
+        VStack {
+            Text("setting")
+            Button {
+                let domain = Bundle.main.bundleIdentifier!
+                UserDefaults.standard.removePersistentDomain(forName: domain)
+                UserDefaults.standard.synchronize()
+            } label: {
+                Label("清除紀錄", systemImage: "xmark.circle")
+                    .labelStyle(.titleAndIcon)
+            }
+        }
+            .tabItem {
+                Label("設定", systemImage: "gear")
+            }
+    }
+    
+    @ViewBuilder
+    private var dailyCostView : some View {
+        HStack {
+            Text("日期")
+                .font(.system(size: 20))
+                .foregroundColor(.blue)
+            DatePicker(selection: $showCostInDayDate, displayedComponents: .date) {
+                
+            }
+            .labelsHidden()
+        }
+        .padding(5)
+        Chart(costDayDataCategoryTotal) { item in
+            BarMark(x: .value("類別", item.category.returnText), y: .value("花費", item.cost))
+                .annotation(position: .automatic, alignment: .center, spacing: nil) {
+                    Text(item.cost, format: .number)
+                }
+        }
+        .onChange(of: showCostInDayDate) { newValue in
+            costDayData = eachAccountingList.filter({
+                $0.time.formatted(date: .numeric, time: .omitted) == newValue.formatted(date: .numeric, time: .omitted)
+            })
+            costDayDataCategoryTotal = buildCostCategoryArr()
+            for data in costDayData {
+                let index = costDayDataCategoryTotal.firstIndex(where: {$0.category == data.costCategory})
+                costDayDataCategoryTotal[index!].cost += data.cost
+            }
+        }
+        .onAppear {
+            costDayData = eachAccountingList.filter({
+                $0.time.formatted(date: .numeric, time: .omitted) == showCostInDayDate.formatted(date: .numeric, time: .omitted)
+            })
+            costDayDataCategoryTotal = buildCostCategoryArr()
+            for data in costDayData {
+                let index = costDayDataCategoryTotal.firstIndex(where: {$0.category == data.costCategory})
+                costDayDataCategoryTotal[index!].cost += data.cost
+            }
+        }
+        
+        Spacer()
+    }
+    
 }
-
+func buildCostCategoryArr() -> [eachCategoryCost] {
+    var list = [eachCategoryCost]()
+    for cate in costCategory.allCases {
+        list.append(eachCategoryCost(category: cate, cost: 0))
+    }
+    return list
+}
 struct eachRecordNavigate : View {
     let accounting : eachAccounting
     @Binding var deleteID : UUID
@@ -345,7 +542,7 @@ struct eachRecordNavigate : View {
             HStack {
                 Label("類別", systemImage: "folder.fill.badge.gearshape")
                 Spacer()
-                Text("\(accounting.costCategory)" as String)
+                Text(accounting.costCategory.returnText)
             }
             HStack {
                 Label("項目名稱", systemImage: "rectangle.and.pencil.and.ellipsis")
