@@ -35,6 +35,11 @@ enum recordSort {
     case descending
     case none
 }
+enum sortBySelection {
+    case category
+    case name
+    case cost
+}
 
 struct eachAccounting : Codable, Hashable,Identifiable {
     let costCategory : costCategory
@@ -52,6 +57,86 @@ struct eachCategoryCost : Identifiable {
     var cost : Int
 }
 
+//view model
+class EachAccountingViewModel: ObservableObject {
+    @Published var eachAccountingList : [eachAccounting] = [eachAccounting]()
+    
+    func sortByCategory(sortBy: sortBySelection, sortType: recordSort) {
+        if sortBy == .category {
+            if sortType == .ascending {
+                self.eachAccountingList.sort(by: { $0.costCategory < $1.costCategory })
+            } else if sortType == .descending {
+                self.eachAccountingList.sort(by: { $0.costCategory > $1.costCategory })
+            }
+        } else if sortBy == .name {
+            if sortType == .ascending {
+                self.eachAccountingList.sort(by: { $0.costName < $1.costName })
+            } else if sortType == .descending {
+                self.eachAccountingList.sort(by: { $0.costName > $1.costName })
+            }
+        } else if sortBy == .cost {
+            if sortType == .ascending {
+                self.eachAccountingList.sort(by: { $0.cost < $1.cost })
+            } else if sortType == .descending {
+                self.eachAccountingList.sort(by: { $0.cost > $1.cost })
+            }
+        }
+    }
+    func addRecord(categorySelectedIndex: costCategory, costNameInput: String, cost: String, dateSelected: Date, costMemo: String, selectPhotoData: Data?) {
+        if UserDefaults.standard.object(forKey: "records") == nil {
+            var records = [eachAccounting]()
+            let record : eachAccounting = eachAccounting(costCategory: categorySelectedIndex, costName: costNameInput, cost: Int(cost) ?? 0, time: dateSelected, note: costMemo, itemPicture: selectPhotoData)
+            records.append(record)
+            self.eachAccountingList = records
+        }else {
+            if let data = UserDefaults.standard.object(forKey: "records") as? Data {
+                let raw = try? JSONDecoder().decode([eachAccounting].self, from: data)
+                var records : [eachAccounting] = raw!
+                let record : eachAccounting = eachAccounting(costCategory: categorySelectedIndex, costName: costNameInput, cost: Int(cost) ?? 0, time: dateSelected, note: costMemo, itemPicture: selectPhotoData)
+                records.append(record)
+                self.eachAccountingList = records
+            }
+        saveRecord()
+        }
+    }
+    func getRecord() {
+        if let data = UserDefaults.standard.object(forKey: "records") as? Data {
+            let raw = try? JSONDecoder().decode([eachAccounting].self, from: data)
+            self.eachAccountingList = raw!
+        }
+    }
+    func deleteRecord(deleteID: UUID) {
+        self.eachAccountingList = self.eachAccountingList.filter({$0.id != deleteID})
+        saveRecord()
+    }
+    func saveRecord() {
+        if let encoded = try? JSONEncoder().encode(self.eachAccountingList) {
+            UserDefaults.standard.setValue(encoded, forKey: "records")
+        }
+    }
+}
+
+class EachCategoryCost : ObservableObject {
+    @Published var costClassifyByCategory : [eachCategoryCost] = [eachCategoryCost]()
+    func buildCostCategoryArr() -> [eachCategoryCost] {
+        var list = [eachCategoryCost]()
+        for cate in costCategory.allCases {
+            list.append(eachCategoryCost(category: cate, cost: 0))
+        }
+        return list
+    }
+    func caculateEachCategoryCost(eachAccountingList: [eachAccounting], showCostInDayDate: Date) {
+        let costDayData = eachAccountingList.filter({
+            $0.time.formatted(date: .numeric, time: .omitted) == showCostInDayDate.formatted(date: .numeric, time: .omitted)
+        })
+        self.costClassifyByCategory = buildCostCategoryArr()
+        for data in costDayData {
+            let index = self.costClassifyByCategory.firstIndex(where: {$0.category == data.costCategory})
+            self.costClassifyByCategory[index!].cost += data.cost
+        }
+    }
+}
+
 struct ContentView: View {
     @State var dateSelected = Date.now
     @State var showAccountingSheet = false
@@ -61,7 +146,9 @@ struct ContentView: View {
     @State var costMemo : String = ""
     @State private var selectedItem : PhotosPickerItem?
     @State var selectPhotoData : Data?
-    @State var eachAccountingList : [eachAccounting] = []
+    
+    @StateObject var eachAccountingList = EachAccountingViewModel()
+    
     let gridItem : [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     @State var categorySort : recordSort = .ascending
     @State var nameSort : recordSort = .none
@@ -69,7 +156,8 @@ struct ContentView: View {
     @State var selectDeleteID : UUID = UUID()
     @State var showCostInDayDate : Date = Date.now
     @State var costDayData : [eachAccounting] = [eachAccounting]()
-    @State var costDayDataCategoryTotal : [eachCategoryCost] = [eachCategoryCost]()
+    
+    @StateObject var eachCategoryCost = EachCategoryCost()
     
     var body: some View {
         TabView {
@@ -187,7 +275,7 @@ struct ContentView: View {
                 }
             }
             ScrollView {
-                ForEach(eachAccountingList, id: \.self) { accounting in
+                ForEach(eachAccountingList.eachAccountingList, id: \.self) { accounting in
                     if accounting.time.formatted(date: .numeric, time: .omitted) == dateSelected.formatted(date: .numeric, time: .omitted) {
                         let _ = print(accounting)
                         NavigationLink {
@@ -312,36 +400,9 @@ struct ContentView: View {
                         }
                     }
                     Button {
-                        if UserDefaults.standard.object(forKey: "records") == nil {
-                            var records = [eachAccounting]()
-                            let record : eachAccounting = eachAccounting(costCategory: categorySelectedIndex, costName: costNameInput, cost: Int(cost) ?? 0, time: dateSelected, note: costMemo, itemPicture: selectPhotoData)
-                            records.append(record)
-                            if let encoded = try? JSONEncoder().encode(records) {
-                                UserDefaults.standard.setValue(encoded, forKey: "records")
-                            }
-                            eachAccountingList = records
-                            print(records)
-                        }else {
-                            if let data = UserDefaults.standard.object(forKey: "records") as? Data {
-                                let raw = try? JSONDecoder().decode([eachAccounting].self, from: data)
-                                var records : [eachAccounting] = raw!
-                                let record : eachAccounting = eachAccounting(costCategory: categorySelectedIndex, costName: costNameInput, cost: Int(cost) ?? 0, time: dateSelected, note: costMemo, itemPicture: selectPhotoData)
-                                records.append(record)
-                                if let encoded = try? JSONEncoder().encode(records) {
-                                    UserDefaults.standard.setValue(encoded, forKey: "records")
-                                }
-                                print(records)
-                                eachAccountingList = records
-                            }
-                            
-                        }
-                        print("record")
+                        eachAccountingList.addRecord(categorySelectedIndex: categorySelectedIndex, costNameInput: costNameInput, cost: cost, dateSelected: dateSelected, costMemo: costMemo, selectPhotoData: selectPhotoData)
                         showAccountingSheet = false
-                        categorySelectedIndex = .food
-                        costNameInput = ""
-                        cost = ""
-                        costMemo = ""
-                        selectPhotoData = nil
+                        clearInputField()
                     } label: {
                         Label("記錄", systemImage: "square.and.pencil")
                     }.buttonStyle(.borderedProminent)
@@ -355,51 +416,40 @@ struct ContentView: View {
                     }
                 }
                 .onChange(of: selectDeleteID) { newValue in
-                    eachAccountingList = eachAccountingList.filter({$0.id != newValue})
-                    if let encoded = try? JSONEncoder().encode(eachAccountingList) {
-                        UserDefaults.standard.setValue(encoded, forKey: "records")
-                    }
+                    eachAccountingList.deleteRecord(deleteID: newValue)
                 }
                 .onChange(of: categorySort) { newValue in
-                    if newValue == .ascending {
-                        eachAccountingList.sort{$0.costCategory < $1.costCategory}
-                    } else if newValue == .descending {
-                        eachAccountingList.sort{$0.costCategory > $1.costCategory}
-                    }
+                    eachAccountingList.sortByCategory(sortBy: .category, sortType: newValue)
                 }
                 .onChange(of: nameSort) { newValue in
-                    if newValue == .ascending {
-                        eachAccountingList.sort{$0.costName < $1.costName}
-                    } else if newValue == .descending {
-                        eachAccountingList.sort{$0.costName > $1.costName}
-                    }
+                    eachAccountingList.sortByCategory(sortBy: .name, sortType: newValue)
                 }
                 .onChange(of: costSort) { newValue in
-                    if newValue == .ascending {
-                        eachAccountingList.sort{$0.cost < $1.cost}
-                    } else if newValue == .descending {
-                        eachAccountingList.sort{$0.cost > $1.cost}
-                    }
+                    eachAccountingList.sortByCategory(sortBy: .cost, sortType: newValue)
                 }
                 
         }
         .onAppear {
-            if let data = UserDefaults.standard.object(forKey: "records") as? Data {
-                let raw = try? JSONDecoder().decode([eachAccounting].self, from: data)
-                eachAccountingList = raw!
-            }
+            eachAccountingList.getRecord()
         }
         .tabItem {
             Label("記帳", systemImage: "dollarsign.circle")
         }
     }
+    
     func checkReturnRecord(costName: String, cost: Int) -> recordError {
         if costName == "" {
             return recordError.costNameError
         }
         return recordError.pass
     }
-    
+    func clearInputField() {
+        self.categorySelectedIndex = .food
+        self.costNameInput = ""
+        self.cost = ""
+        self.costMemo = ""
+        self.selectPhotoData = nil
+    }
     
     @ViewBuilder
     private var checkCostView : some View {
@@ -495,44 +545,24 @@ struct ContentView: View {
             .labelsHidden()
         }
         .padding(5)
-        Chart(costDayDataCategoryTotal) { item in
+        Chart(eachCategoryCost.costClassifyByCategory) { item in
             BarMark(x: .value("類別", item.category.returnText), y: .value("花費", item.cost))
                 .annotation(position: .automatic, alignment: .center, spacing: nil) {
                     Text(item.cost, format: .number)
                 }
         }
         .onChange(of: showCostInDayDate) { newValue in
-            costDayData = eachAccountingList.filter({
-                $0.time.formatted(date: .numeric, time: .omitted) == newValue.formatted(date: .numeric, time: .omitted)
-            })
-            costDayDataCategoryTotal = buildCostCategoryArr()
-            for data in costDayData {
-                let index = costDayDataCategoryTotal.firstIndex(where: {$0.category == data.costCategory})
-                costDayDataCategoryTotal[index!].cost += data.cost
-            }
+            eachCategoryCost.caculateEachCategoryCost(eachAccountingList: eachAccountingList.eachAccountingList, showCostInDayDate: showCostInDayDate)
         }
         .onAppear {
-            costDayData = eachAccountingList.filter({
-                $0.time.formatted(date: .numeric, time: .omitted) == showCostInDayDate.formatted(date: .numeric, time: .omitted)
-            })
-            costDayDataCategoryTotal = buildCostCategoryArr()
-            for data in costDayData {
-                let index = costDayDataCategoryTotal.firstIndex(where: {$0.category == data.costCategory})
-                costDayDataCategoryTotal[index!].cost += data.cost
-            }
+            eachCategoryCost.caculateEachCategoryCost(eachAccountingList: eachAccountingList.eachAccountingList, showCostInDayDate: showCostInDayDate)
         }
         
         Spacer()
     }
     
 }
-func buildCostCategoryArr() -> [eachCategoryCost] {
-    var list = [eachCategoryCost]()
-    for cate in costCategory.allCases {
-        list.append(eachCategoryCost(category: cate, cost: 0))
-    }
-    return list
-}
+
 struct eachRecordNavigate : View {
     let accounting : eachAccounting
     @Binding var deleteID : UUID
