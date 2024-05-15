@@ -96,7 +96,11 @@ struct costBaseWeek {
 }
 //view model
 class EachAccountingViewModel: ObservableObject {
-    @Published var eachAccountingList : [eachAccounting] = [eachAccounting]()
+    @Published var eachAccountingList : [eachAccounting] = [eachAccounting]() {
+        didSet {
+            saveRecord()
+        }
+    }
     @Published var costThisDay: Int = 0
     @Published var costThisWeek: Int = 0
     @Published var costThisMonth: Int = 0
@@ -238,7 +242,7 @@ class EachAccountingViewModel: ObservableObject {
                 self.eachAccountingList = records
             }
         }
-        saveRecord()
+//        saveRecord()
     }
     func getRecord() {
         if let data = UserDefaults.standard.object(forKey: "records") as? Data {
@@ -249,7 +253,7 @@ class EachAccountingViewModel: ObservableObject {
     }
     func deleteRecord(deleteID: UUID) {
         self.eachAccountingList = self.eachAccountingList.filter({$0.id != deleteID})
-        saveRecord()
+//        saveRecord()
     }
     func saveRecord() {
         if let encoded = try? JSONEncoder().encode(eachAccountingList) {
