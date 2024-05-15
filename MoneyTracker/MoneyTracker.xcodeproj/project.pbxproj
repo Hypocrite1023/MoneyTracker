@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD0C4DF72BDD259300BE80F6 /* dailycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0C4DF62BDD259300BE80F6 /* dailycost.swift */; };
+		CD0C4DFA2BDD474A00BE80F6 /* fontflip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */; };
 		CD0D42492BAC7D6E0005EB7D /* MoneyTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */; };
 		CD0D424B2BAC7D6E0005EB7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */; };
 		CD0D424D2BAC7D6E0005EB7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD0D424C2BAC7D6E0005EB7D /* Assets.xcassets */; };
@@ -14,6 +16,14 @@
 		CD0D425A2BAC7D6E0005EB7D /* MoneyTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D42592BAC7D6E0005EB7D /* MoneyTrackerTests.swift */; };
 		CD0D42642BAC7D6E0005EB7D /* MoneyTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D42632BAC7D6E0005EB7D /* MoneyTrackerUITests.swift */; };
 		CD0D42662BAC7D6E0005EB7D /* MoneyTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D42652BAC7D6E0005EB7D /* MoneyTrackerUITestsLaunchTests.swift */; };
+		CD2A671A2BE2466C00D1CC7B /* QRcodeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A67192BE2466C00D1CC7B /* QRcodeReader.swift */; };
+		CD481B682BE69D76008E9D4E /* costToChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD481B672BE69D76008E9D4E /* costToChart.swift */; };
+		CD729E9E2BE666D600493CFA /* progressLoopWithAnimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */; };
+		CD8AFA6F2BEC814800DFB74D /* weekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */; };
+		CD9F827F2BDBD3B200BCDD27 /* costListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F827E2BDBD3B200BCDD27 /* costListView.swift */; };
+		CDE0C4082BEA16670048415F /* weeklycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4072BEA16670048415F /* weeklycost.swift */; };
+		CDE0C40A2BEB334A0048415F /* monthlycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4092BEB334A0048415F /* monthlycost.swift */; };
+		CDE0C40C2BEB5DF00048415F /* monthYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD0C4DF62BDD259300BE80F6 /* dailycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dailycost.swift; sourceTree = "<group>"; };
+		CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fontflip.swift; sourceTree = "<group>"; };
 		CD0D42452BAC7D6E0005EB7D /* MoneyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTrackerApp.swift; sourceTree = "<group>"; };
 		CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +56,14 @@
 		CD0D425F2BAC7D6E0005EB7D /* MoneyTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoneyTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D42632BAC7D6E0005EB7D /* MoneyTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTrackerUITests.swift; sourceTree = "<group>"; };
 		CD0D42652BAC7D6E0005EB7D /* MoneyTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CD2A67192BE2466C00D1CC7B /* QRcodeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeReader.swift; sourceTree = "<group>"; };
+		CD481B672BE69D76008E9D4E /* costToChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = costToChart.swift; sourceTree = "<group>"; };
+		CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = progressLoopWithAnimate.swift; sourceTree = "<group>"; };
+		CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weekPicker.swift; sourceTree = "<group>"; };
+		CD9F827E2BDBD3B200BCDD27 /* costListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = costListView.swift; sourceTree = "<group>"; };
+		CDE0C4072BEA16670048415F /* weeklycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weeklycost.swift; sourceTree = "<group>"; };
+		CDE0C4092BEB334A0048415F /* monthlycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthlycost.swift; sourceTree = "<group>"; };
+		CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthYearPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +91,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD0C4DF52BDD256F00BE80F6 /* costView */ = {
+			isa = PBXGroup;
+			children = (
+				CD0C4DF62BDD259300BE80F6 /* dailycost.swift */,
+				CDE0C4072BEA16670048415F /* weeklycost.swift */,
+				CDE0C4092BEB334A0048415F /* monthlycost.swift */,
+			);
+			path = costView;
+			sourceTree = "<group>";
+		};
+		CD0C4DF82BDD473B00BE80F6 /* animate */ = {
+			isa = PBXGroup;
+			children = (
+				CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */,
+			);
+			path = animate;
+			sourceTree = "<group>";
+		};
 		CD0D423C2BAC7D6E0005EB7D = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +132,12 @@
 		CD0D42472BAC7D6E0005EB7D /* MoneyTracker */ = {
 			isa = PBXGroup;
 			children = (
+				CD0C4DF82BDD473B00BE80F6 /* animate */,
+				CD0C4DF52BDD256F00BE80F6 /* costView */,
+				CD9F827D2BDBD3A100BCDD27 /* component */,
 				CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */,
 				CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */,
+				CD2A67192BE2466C00D1CC7B /* QRcodeReader.swift */,
 				CD0D424C2BAC7D6E0005EB7D /* Assets.xcassets */,
 				CD0D424E2BAC7D6E0005EB7D /* Preview Content */,
 			);
@@ -125,6 +167,18 @@
 				CD0D42652BAC7D6E0005EB7D /* MoneyTrackerUITestsLaunchTests.swift */,
 			);
 			path = MoneyTrackerUITests;
+			sourceTree = "<group>";
+		};
+		CD9F827D2BDBD3A100BCDD27 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				CD9F827E2BDBD3B200BCDD27 /* costListView.swift */,
+				CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */,
+				CD481B672BE69D76008E9D4E /* costToChart.swift */,
+				CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */,
+				CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */,
+			);
+			path = component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +311,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD2A671A2BE2466C00D1CC7B /* QRcodeReader.swift in Sources */,
+				CD729E9E2BE666D600493CFA /* progressLoopWithAnimate.swift in Sources */,
+				CD481B682BE69D76008E9D4E /* costToChart.swift in Sources */,
 				CD0D424B2BAC7D6E0005EB7D /* ContentView.swift in Sources */,
+				CD0C4DFA2BDD474A00BE80F6 /* fontflip.swift in Sources */,
+				CD8AFA6F2BEC814800DFB74D /* weekPicker.swift in Sources */,
 				CD0D42492BAC7D6E0005EB7D /* MoneyTrackerApp.swift in Sources */,
+				CDE0C4082BEA16670048415F /* weeklycost.swift in Sources */,
+				CD0C4DF72BDD259300BE80F6 /* dailycost.swift in Sources */,
+				CDE0C40A2BEB334A0048415F /* monthlycost.swift in Sources */,
+				CD9F827F2BDBD3B200BCDD27 /* costListView.swift in Sources */,
+				CDE0C40C2BEB5DF00048415F /* monthYearPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +484,7 @@
 				DEVELOPMENT_TEAM = P2CKQU8TPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "need camera to scan QR code";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,6 +515,7 @@
 				DEVELOPMENT_TEAM = P2CKQU8TPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "need camera to scan QR code";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
