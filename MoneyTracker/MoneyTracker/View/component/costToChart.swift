@@ -27,7 +27,7 @@ struct costToChart: View {
         }
 //        .frame(width: 200, height: 200)
         .onAppear {
-            eachAccountingList.getRecord()
+//            eachAccountingList.getRecord()
             eachCategoryCost.caculateEachCategoryCost(eachAccountingList: eachAccountingList.eachAccountingList, showCostInDayDate: showCostInDayDate)
         }
     }

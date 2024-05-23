@@ -8,31 +8,16 @@
 import SwiftUI
 import Charts
 
-class operateMonth: ObservableObject {
-    @Published var showCostInDayDate : Date = Date.now
-    @Published var selectDeleteID : UUID = UUID()
-    @Published var monthCostUpperBound: Int = 2000
-    @Published var percent : Double = 0
-    @Published var showData: [Bool] = Array(repeating: false, count: 7)
-    @Published var yearMonthSelected = Calendar.current.dateComponents(in: .current, from: .now).year!*100 + Calendar.current.dateComponents(in: .current, from: .now).month!
-    func returnDateStr(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY/MM"
-        return dateFormatter.string(from: date)
-    }
-    
-}
-
-struct monthlycost: View {
+struct MonthlyCost: View {
     
     @StateObject var eachAccountingList = EachAccountingViewModel()
     @StateObject var eachCategoryCost = EachCategoryCost()
-    @StateObject var operateManager = operateMonth()
-    
+    @StateObject var operateManager = OperateMonth()
+    @State var upperBoundManager = SpendUpperBoundManager()
     var body: some View {
         TabView {
             //detail
-            ScrollView() {
+            NavigationStack {
                 VStack {
                     HStack {
                         Text("趨勢圖")
@@ -49,19 +34,7 @@ struct monthlycost: View {
                             .padding(.trailing, 5)
                     }
                     .padding(.top, 10)
-                    Chart {
-                        ForEach(0..<eachAccountingList.costByMonth.count, id: \.self) {
-                            month in
-                            let combineStr = operateManager.returnDateStr(date: Calendar.current.date(from: eachAccountingList.costByMonth[month].monthYear)!)
-                            if operateManager.showData[month] {
-                                LineMark(
-                                    x: .value("month,year", combineStr),
-                                    y: .value("cost", eachAccountingList.costByMonth[month].cost)
-                                )
-                            }
-                        }
-                    }
-                    
+                    LineChart(accountingListBaseDay: $eachAccountingList.costByDay, accountingListBaseWeek: $eachAccountingList.costByWeek, accountingListBaseMonth: $eachAccountingList.costByMonth, mode: .month)
                     Divider()
                     HStack {
                         Text("目標")
@@ -87,7 +60,7 @@ struct monthlycost: View {
                             }
                             HStack {
                                 Spacer()
-                                Text(operateManager.monthCostUpperBound, format: .currency(code: "TWD").precision(.fractionLength(0)))
+                                Text(upperBoundManager.getMonthUpperBound(), format: .currency(code: "TWD").precision(.fractionLength(0)))
                                 
                             }
                             Divider()
@@ -112,36 +85,28 @@ struct monthlycost: View {
             .onAppear {
                 
                 operateManager.percent = 0.0
-                eachAccountingList.getRecord()
+//                eachAccountingList.getRecord()
                 eachAccountingList.filterCostByMonth(dateInput: operateManager.showCostInDayDate)
                 withAnimation(.linear(duration: 1)) {
-                    operateManager.percent += Double(eachAccountingList.costThisMonth)/Double(operateManager.monthCostUpperBound)
+                    operateManager.percent += Double(eachAccountingList.costThisMonth)/Double(upperBoundManager.getMonthUpperBound())
 
                 }
 
                 eachAccountingList.computeCostByMonth(dateNow: operateManager.showCostInDayDate)
-                for counter in 0...eachAccountingList.costByMonth.count - 1 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * Double(counter)) { // adjust speed by changing 0.2
-                        operateManager.showData[counter] = true
-                        }
-                }
+                
                 
             }
             .onChange(of: operateManager.showCostInDayDate, perform: { newValue in
                 operateManager.percent = 0.0
                 eachAccountingList.filterCostByMonth(dateInput: operateManager.showCostInDayDate)
                 withAnimation(.linear(duration: 1)) {
-                    operateManager.percent += Double(eachAccountingList.costThisMonth)/Double(operateManager.monthCostUpperBound)
+                    operateManager.percent += Double(eachAccountingList.costThisMonth)/Double(upperBoundManager.getMonthUpperBound())
 
                 }
 
                 eachAccountingList.computeCostByMonth(dateNow: operateManager.showCostInDayDate)
                 operateManager.showData = Array(repeating: false, count: 7)
-                for counter in 0...eachAccountingList.costByMonth.count - 1 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * Double(counter)) { // adjust speed by changing 0.2
-                        operateManager.showData[counter] = true
-                        }
-                }
+                
             })
             .onChange(of: operateManager.yearMonthSelected, perform: { newValue in
                 operateManager.showCostInDayDate = Calendar.current.date(from: DateComponents(calendar: .current, timeZone: .current, year: newValue/100, month: newValue%100))!
@@ -163,22 +128,19 @@ struct monthlycost: View {
                 .padding(.top, 10)
 
                 List {
-                    ForEach(eachAccountingList.eachAccountingList, id: \.self) { accounting in
-                        let accountingDateComponent = Calendar.current.dateComponents(in: .current, from: accounting.time)
-                        let selectedDateComponent = Calendar.current.dateComponents(in: .current, from: operateManager.showCostInDayDate)
-                        if accountingDateComponent.year == selectedDateComponent.year && accountingDateComponent.month == selectedDateComponent.month {
-                            NavigationLink {
-                                eachRecordNavigate(accounting: accounting, deleteID: $operateManager.selectDeleteID)
-                            } label: {
-                                HStack {
-                                    accounting.costCategory.label
-                                    Text(accounting.costName)
-                                    Text(String(accounting.cost))
-                                }
+                    ForEach(0..<eachAccountingList.accounting.count, id: \.self) { index in
+                        let account = eachAccountingList.accounting[index]
+                        let eachAccount = eachAccounting(costCategory: stringToCategory(str: account.costCategory!), costName: account.costName!, cost: Int(account.cost), time: .now, note: account.note!, itemPicture: account.itemPicture, id: account.id!)
+                        NavigationLink {
+                            EachRecordNavigate(accounting: eachAccount, inputDeleteID: $operateManager.selectDeleteID, showDay: $operateManager.showCostInDayDate)
+                        } label: {
+                            HStack {
+                                stringToCategory(str: account.costCategory!).label
+                                Text(account.costName!)
+                                Spacer()
+                                Text(String(account.cost))
                             }
-
                         }
-                        
                     }
                 }
                 .listStyle(.inset)
@@ -187,16 +149,18 @@ struct monthlycost: View {
                 Text("data")
             })
             .onChange(of: operateManager.showCostInDayDate) { newValue in
-                eachCategoryCost.caculateEachCategoryCost(eachAccountingList: eachAccountingList.eachAccountingList, showCostInDayDate: newValue)
+                eachAccountingList.filterCostByMonth(dateInput: newValue)
+//                eachAccountingList.computeCostByMonth(dateNow: newValue)
             }
             .onChange(of: operateManager.yearMonthSelected, perform: { newValue in
                 operateManager.showCostInDayDate = Calendar.current.date(from: DateComponents(calendar: .current, timeZone: .current, year: newValue/100, month: newValue%100))!
             })
+            .onChange(of: operateManager.selectDeleteID, perform: { newValue in
+                eachAccountingList.deleteRecord(deleteID: newValue)
+                eachAccountingList.filterCostByMonth(dateInput: operateManager.showCostInDayDate)
+            })
             .onAppear {
-                eachAccountingList.getRecord()
-                eachCategoryCost.caculateEachCategoryCost(eachAccountingList: eachAccountingList.eachAccountingList, showCostInDayDate: operateManager.showCostInDayDate)
-                
-                
+                eachAccountingList.filterCostByMonth(dateInput: operateManager.showCostInDayDate)
             }
             //graph
             
@@ -221,10 +185,19 @@ struct monthlycost: View {
         let dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: date)
         return dateComponent.year!
     }
+    func stringToCategory(str: String) -> costCategory {
+        var setCategory: costCategory = .entertainment
+        for category in costCategory.allCases {
+            if str == category.returnText {
+                setCategory = category
+            }
+        }
+        return setCategory
+    }
 }
 
 struct monthlycost_Previews: PreviewProvider {
     static var previews: some View {
-        monthlycost()
+        MonthlyCost()
     }
 }

@@ -30,7 +30,8 @@ struct progressLoopWithAnimate: View {
     @Binding var percent: Double
     var body: some View {
         ZStack {
-            Text(CGFloat(percent), format: .percent)
+            Text("\(percent*100, specifier: "%.2f")%")
+//            Text(CGFloat(percent), format: .percent)
                 .bold()
                 .font(.system(size: 20))
             Circle()

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CD0C4DF72BDD259300BE80F6 /* dailycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0C4DF62BDD259300BE80F6 /* dailycost.swift */; };
-		CD0C4DFA2BDD474A00BE80F6 /* fontflip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */; };
+		CD052DD72BFF3F3B004E324F /* SpendUpperBoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD052DD62BFF3F3B004E324F /* SpendUpperBoundManager.swift */; };
+		CD052DD92BFF5B9F004E324F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD052DD82BFF5B9F004E324F /* LaunchScreen.storyboard */; };
+		CD052DDB2BFF5FED004E324F /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD052DDA2BFF5FED004E324F /* CameraView.swift */; };
+		CD0C4DF72BDD259300BE80F6 /* DailyCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0C4DF62BDD259300BE80F6 /* DailyCost.swift */; };
 		CD0D42492BAC7D6E0005EB7D /* MoneyTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */; };
 		CD0D424B2BAC7D6E0005EB7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */; };
 		CD0D424D2BAC7D6E0005EB7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD0D424C2BAC7D6E0005EB7D /* Assets.xcassets */; };
@@ -21,9 +23,23 @@
 		CD729E9E2BE666D600493CFA /* progressLoopWithAnimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */; };
 		CD8AFA6F2BEC814800DFB74D /* weekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */; };
 		CD9F827F2BDBD3B200BCDD27 /* costListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F827E2BDBD3B200BCDD27 /* costListView.swift */; };
-		CDE0C4082BEA16670048415F /* weeklycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4072BEA16670048415F /* weeklycost.swift */; };
-		CDE0C40A2BEB334A0048415F /* monthlycost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4092BEB334A0048415F /* monthlycost.swift */; };
+		CDE0C4082BEA16670048415F /* WeeklyCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4072BEA16670048415F /* WeeklyCost.swift */; };
+		CDE0C40A2BEB334A0048415F /* MonthlyCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C4092BEB334A0048415F /* MonthlyCost.swift */; };
 		CDE0C40C2BEB5DF00048415F /* monthYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */; };
+		CDE9D5DE2BF4E98A0059D398 /* accounting.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5DC2BF4E98A0059D398 /* accounting.xcdatamodeld */; };
+		CDE9D5E02BF4EDAA0059D398 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5DF2BF4EDAA0059D398 /* DataController.swift */; };
+		CDE9D5E72BFB1BF50059D398 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5E62BFB1BF50059D398 /* DataModel.swift */; };
+		CDE9D5E92BFB1CB90059D398 /* EachAccounting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5E82BFB1CB90059D398 /* EachAccounting.swift */; };
+		CDE9D5EB2BFB1CED0059D398 /* EachCategoryCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5EA2BFB1CED0059D398 /* EachCategoryCost.swift */; };
+		CDE9D5ED2BFB1D7F0059D398 /* OperateDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5EC2BFB1D7F0059D398 /* OperateDayViewModel.swift */; };
+		CDE9D5EF2BFB1DEC0059D398 /* OperateWeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5EE2BFB1DEC0059D398 /* OperateWeekViewModel.swift */; };
+		CDE9D5F12BFB1E060059D398 /* OperateMonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5F02BFB1E060059D398 /* OperateMonthViewModel.swift */; };
+		CDE9D5F42BFB21BE0059D398 /* MoneyAccountingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5F32BFB21BE0059D398 /* MoneyAccountingView.swift */; };
+		CDE9D5F62BFB23980059D398 /* CheckCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5F52BFB23980059D398 /* CheckCostView.swift */; };
+		CDE9D5F82BFB242A0059D398 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5F72BFB242A0059D398 /* SettingView.swift */; };
+		CDE9D5FA2BFB25240059D398 /* EachAccountingNavigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5F92BFB25240059D398 /* EachAccountingNavigate.swift */; };
+		CDE9D5FD2BFB3C4F0059D398 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5FC2BFB3C4F0059D398 /* LineChart.swift */; };
+		CDE9D5FF2BFF2C9A0059D398 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9D5FE2BFF2C9A0059D398 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +60,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CD0C4DF62BDD259300BE80F6 /* dailycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dailycost.swift; sourceTree = "<group>"; };
-		CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fontflip.swift; sourceTree = "<group>"; };
+		CD052DD62BFF3F3B004E324F /* SpendUpperBoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendUpperBoundManager.swift; sourceTree = "<group>"; };
+		CD052DD82BFF5B9F004E324F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CD052DDA2BFF5FED004E324F /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		CD0C4DF62BDD259300BE80F6 /* DailyCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCost.swift; sourceTree = "<group>"; };
 		CD0D42452BAC7D6E0005EB7D /* MoneyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTrackerApp.swift; sourceTree = "<group>"; };
 		CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,9 +79,23 @@
 		CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = progressLoopWithAnimate.swift; sourceTree = "<group>"; };
 		CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weekPicker.swift; sourceTree = "<group>"; };
 		CD9F827E2BDBD3B200BCDD27 /* costListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = costListView.swift; sourceTree = "<group>"; };
-		CDE0C4072BEA16670048415F /* weeklycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weeklycost.swift; sourceTree = "<group>"; };
-		CDE0C4092BEB334A0048415F /* monthlycost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthlycost.swift; sourceTree = "<group>"; };
+		CDE0C4072BEA16670048415F /* WeeklyCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCost.swift; sourceTree = "<group>"; };
+		CDE0C4092BEB334A0048415F /* MonthlyCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCost.swift; sourceTree = "<group>"; };
 		CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthYearPicker.swift; sourceTree = "<group>"; };
+		CDE9D5DD2BF4E98A0059D398 /* accounting.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = accounting.xcdatamodel; sourceTree = "<group>"; };
+		CDE9D5DF2BF4EDAA0059D398 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		CDE9D5E62BFB1BF50059D398 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		CDE9D5E82BFB1CB90059D398 /* EachAccounting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachAccounting.swift; sourceTree = "<group>"; };
+		CDE9D5EA2BFB1CED0059D398 /* EachCategoryCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachCategoryCost.swift; sourceTree = "<group>"; };
+		CDE9D5EC2BFB1D7F0059D398 /* OperateDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperateDayViewModel.swift; sourceTree = "<group>"; };
+		CDE9D5EE2BFB1DEC0059D398 /* OperateWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperateWeekViewModel.swift; sourceTree = "<group>"; };
+		CDE9D5F02BFB1E060059D398 /* OperateMonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperateMonthViewModel.swift; sourceTree = "<group>"; };
+		CDE9D5F32BFB21BE0059D398 /* MoneyAccountingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyAccountingView.swift; sourceTree = "<group>"; };
+		CDE9D5F52BFB23980059D398 /* CheckCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckCostView.swift; sourceTree = "<group>"; };
+		CDE9D5F72BFB242A0059D398 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		CDE9D5F92BFB25240059D398 /* EachAccountingNavigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachAccountingNavigate.swift; sourceTree = "<group>"; };
+		CDE9D5FC2BFB3C4F0059D398 /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
+		CDE9D5FE2BFF2C9A0059D398 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,27 +123,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CD0C4DF52BDD256F00BE80F6 /* costView */ = {
-			isa = PBXGroup;
-			children = (
-				CD0C4DF62BDD259300BE80F6 /* dailycost.swift */,
-				CDE0C4072BEA16670048415F /* weeklycost.swift */,
-				CDE0C4092BEB334A0048415F /* monthlycost.swift */,
-			);
-			path = costView;
-			sourceTree = "<group>";
-		};
-		CD0C4DF82BDD473B00BE80F6 /* animate */ = {
-			isa = PBXGroup;
-			children = (
-				CD0C4DF92BDD474A00BE80F6 /* fontflip.swift */,
-			);
-			path = animate;
-			sourceTree = "<group>";
-		};
 		CD0D423C2BAC7D6E0005EB7D = {
 			isa = PBXGroup;
 			children = (
+				CDE9D5DC2BF4E98A0059D398 /* accounting.xcdatamodeld */,
+				CDE9D5DF2BF4EDAA0059D398 /* DataController.swift */,
 				CD0D42472BAC7D6E0005EB7D /* MoneyTracker */,
 				CD0D42582BAC7D6E0005EB7D /* MoneyTrackerTests */,
 				CD0D42622BAC7D6E0005EB7D /* MoneyTrackerUITests */,
@@ -132,12 +148,10 @@
 		CD0D42472BAC7D6E0005EB7D /* MoneyTracker */ = {
 			isa = PBXGroup;
 			children = (
-				CD0C4DF82BDD473B00BE80F6 /* animate */,
-				CD0C4DF52BDD256F00BE80F6 /* costView */,
-				CD9F827D2BDBD3A100BCDD27 /* component */,
+				CDE9D5E12BFB1A330059D398 /* Model */,
+				CDE9D5E42BFB1A5D0059D398 /* ViewModel */,
+				CDE9D5E22BFB1A490059D398 /* View */,
 				CD0D42482BAC7D6E0005EB7D /* MoneyTrackerApp.swift */,
-				CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */,
-				CD2A67192BE2466C00D1CC7B /* QRcodeReader.swift */,
 				CD0D424C2BAC7D6E0005EB7D /* Assets.xcassets */,
 				CD0D424E2BAC7D6E0005EB7D /* Preview Content */,
 			);
@@ -172,13 +186,71 @@
 		CD9F827D2BDBD3A100BCDD27 /* component */ = {
 			isa = PBXGroup;
 			children = (
+				CDE9D5F92BFB25240059D398 /* EachAccountingNavigate.swift */,
 				CD9F827E2BDBD3B200BCDD27 /* costListView.swift */,
 				CD729E9D2BE666D600493CFA /* progressLoopWithAnimate.swift */,
 				CD481B672BE69D76008E9D4E /* costToChart.swift */,
 				CDE0C40B2BEB5DF00048415F /* monthYearPicker.swift */,
 				CD8AFA6E2BEC814800DFB74D /* weekPicker.swift */,
+				CDE9D5FE2BFF2C9A0059D398 /* CardView.swift */,
 			);
 			path = component;
+			sourceTree = "<group>";
+		};
+		CDE9D5E12BFB1A330059D398 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CDE9D5E62BFB1BF50059D398 /* DataModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CDE9D5E22BFB1A490059D398 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D424A2BAC7D6E0005EB7D /* ContentView.swift */,
+				CDE9D5F32BFB21BE0059D398 /* MoneyAccountingView.swift */,
+				CDE9D5F52BFB23980059D398 /* CheckCostView.swift */,
+				CDE9D5F72BFB242A0059D398 /* SettingView.swift */,
+				CD2A67192BE2466C00D1CC7B /* QRcodeReader.swift */,
+				CD052DDA2BFF5FED004E324F /* CameraView.swift */,
+				CDE9D5E52BFB1A8C0059D398 /* CostView */,
+				CDE9D5FB2BFB3C320059D398 /* Chart */,
+				CD9F827D2BDBD3A100BCDD27 /* component */,
+				CD052DD82BFF5B9F004E324F /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CDE9D5E42BFB1A5D0059D398 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CDE9D5E82BFB1CB90059D398 /* EachAccounting.swift */,
+				CDE9D5EA2BFB1CED0059D398 /* EachCategoryCost.swift */,
+				CDE9D5EC2BFB1D7F0059D398 /* OperateDayViewModel.swift */,
+				CDE9D5EE2BFB1DEC0059D398 /* OperateWeekViewModel.swift */,
+				CDE9D5F02BFB1E060059D398 /* OperateMonthViewModel.swift */,
+				CD052DD62BFF3F3B004E324F /* SpendUpperBoundManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CDE9D5E52BFB1A8C0059D398 /* CostView */ = {
+			isa = PBXGroup;
+			children = (
+				CD0C4DF62BDD259300BE80F6 /* DailyCost.swift */,
+				CDE0C4072BEA16670048415F /* WeeklyCost.swift */,
+				CDE0C4092BEB334A0048415F /* MonthlyCost.swift */,
+			);
+			path = CostView;
+			sourceTree = "<group>";
+		};
+		CDE9D5FB2BFB3C320059D398 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				CDE9D5FC2BFB3C4F0059D398 /* LineChart.swift */,
+			);
+			path = Chart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD052DD92BFF5B9F004E324F /* LaunchScreen.storyboard in Resources */,
 				CD0D42502BAC7D6E0005EB7D /* Preview Assets.xcassets in Resources */,
 				CD0D424D2BAC7D6E0005EB7D /* Assets.xcassets in Resources */,
 			);
@@ -313,14 +386,29 @@
 			files = (
 				CD2A671A2BE2466C00D1CC7B /* QRcodeReader.swift in Sources */,
 				CD729E9E2BE666D600493CFA /* progressLoopWithAnimate.swift in Sources */,
+				CDE9D5FA2BFB25240059D398 /* EachAccountingNavigate.swift in Sources */,
 				CD481B682BE69D76008E9D4E /* costToChart.swift in Sources */,
+				CDE9D5DE2BF4E98A0059D398 /* accounting.xcdatamodeld in Sources */,
+				CDE9D5F82BFB242A0059D398 /* SettingView.swift in Sources */,
+				CDE9D5F42BFB21BE0059D398 /* MoneyAccountingView.swift in Sources */,
 				CD0D424B2BAC7D6E0005EB7D /* ContentView.swift in Sources */,
-				CD0C4DFA2BDD474A00BE80F6 /* fontflip.swift in Sources */,
+				CDE9D5E72BFB1BF50059D398 /* DataModel.swift in Sources */,
+				CDE9D5F62BFB23980059D398 /* CheckCostView.swift in Sources */,
 				CD8AFA6F2BEC814800DFB74D /* weekPicker.swift in Sources */,
+				CDE9D5E02BF4EDAA0059D398 /* DataController.swift in Sources */,
 				CD0D42492BAC7D6E0005EB7D /* MoneyTrackerApp.swift in Sources */,
-				CDE0C4082BEA16670048415F /* weeklycost.swift in Sources */,
-				CD0C4DF72BDD259300BE80F6 /* dailycost.swift in Sources */,
-				CDE0C40A2BEB334A0048415F /* monthlycost.swift in Sources */,
+				CDE0C4082BEA16670048415F /* WeeklyCost.swift in Sources */,
+				CD052DD72BFF3F3B004E324F /* SpendUpperBoundManager.swift in Sources */,
+				CDE9D5FF2BFF2C9A0059D398 /* CardView.swift in Sources */,
+				CDE9D5EB2BFB1CED0059D398 /* EachCategoryCost.swift in Sources */,
+				CDE9D5ED2BFB1D7F0059D398 /* OperateDayViewModel.swift in Sources */,
+				CDE9D5EF2BFB1DEC0059D398 /* OperateWeekViewModel.swift in Sources */,
+				CDE9D5FD2BFB3C4F0059D398 /* LineChart.swift in Sources */,
+				CDE9D5E92BFB1CB90059D398 /* EachAccounting.swift in Sources */,
+				CD052DDB2BFF5FED004E324F /* CameraView.swift in Sources */,
+				CD0C4DF72BDD259300BE80F6 /* DailyCost.swift in Sources */,
+				CDE9D5F12BFB1E060059D398 /* OperateMonthViewModel.swift in Sources */,
+				CDE0C40A2BEB334A0048415F /* MonthlyCost.swift in Sources */,
 				CD9F827F2BDBD3B200BCDD27 /* costListView.swift in Sources */,
 				CDE0C40C2BEB5DF00048415F /* monthYearPicker.swift in Sources */,
 			);
@@ -478,6 +566,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyTracker/Preview Content\"";
@@ -485,11 +574,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera to scan QR code";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "need to access your photo library that you can take a photo and select that photo to represent the item";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -509,6 +600,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyTracker/Preview Content\"";
@@ -516,11 +608,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera to scan QR code";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "need to access your photo library that you can take a photo and select that photo to represent the item";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -651,6 +745,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CDE9D5DC2BF4E98A0059D398 /* accounting.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CDE9D5DD2BF4E98A0059D398 /* accounting.xcdatamodel */,
+			);
+			currentVersion = CDE9D5DD2BF4E98A0059D398 /* accounting.xcdatamodel */;
+			path = accounting.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CD0D423D2BAC7D6E0005EB7D /* Project object */;
 }
