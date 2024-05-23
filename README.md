@@ -5,6 +5,9 @@
 
 ## 2024/05/23
 ### 基本的功能都寫好了，相機拍照部分等UIKit比較熟後再處理
+#### line chart的部分想模仿健康app裡的chart 一樣可以無限的scroll
+#### 可加入圓餅圖，看各個category的花費佔比
+#### 可加入第三方套件，熟悉使用cocoapod
 > NSPredicate->從core data抓資料會用到，類似資料庫語法
 ```
 let request = NSFetchRequest<Accounting>(entityName: "Accounting")
